@@ -39,7 +39,7 @@ jobs:
 
     # Sequential Jobs: SonarQube Analysis and Artifact Upload
   sonar_analysis:
-    # This job will also run on the self-hosted runner with the "staging" label.
+    # This job will also run on the self-hosted runner with the lable name "staging" label.
     # Ensure the staging runner has the "staging" label.
     runs-on: [self-hosted, staging]  # Self-hosted EC2 with Tomcat installed (Staging)
     needs: build_and_test

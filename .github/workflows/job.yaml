@@ -69,4 +69,34 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Pavan99166_my-helloworld-GH-Actions
+  upload_artifact:
+    # This job will also run on the self-hosted runner with the "staging" label.
+    # Ensure the staging runner has the "staging" label.
+    runs-on: [self-hosted, staging]  # Self-hosted EC2 with Tomcat installed (Staging)
+    needs: build_and_test
+    if: ${{ needs.build_and_test.result == 'success' }}  # Run only if build and test succeed
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Configure Maven settings
+        run: |
+          echo "Uploading artifact to JFrog Artifactory..."
+          mkdir -p ~/.m2
+          echo "<settings>
+                  <servers>
+                    <server>
+                      <id>my-github-actions</id>
+                      <username>${{ secrets.JFROG1_USERNAME }}</username>
+                      <password>${{ secrets.JFROG1_API_KEY }}</password>
+                    </server>
+                  </servers>
+                </settings>" > ~/.m2/settings.xml
+
+          mvn clean deploy    
+   #   - name: Upload Artifact to JFrog Artifactory
+    #    run: |
+     #     echo "Uploading artifact to JFrog Artifactory..."
+      #    curl -u "${{ secrets.JFROG_USERNAME }}:${{ secrets.JFROG_API_KEY }}" \
+       #        -T target/my-helloworld.war \
+        #       "http://3.94.159.27:8082/artifactory/hello-world-war-libs-release/"

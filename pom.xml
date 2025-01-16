@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>my-helloworld-gh-act-libs-release</name>
+        <url>http://13.127.158.74:8082/artifactory/my-helloworld-gh-act-libs-release/</url>
+    </repository>
+    </distributionManagement>
+
     <dependencies>
         <!-- Servlet API Dependency -->
         <dependency>

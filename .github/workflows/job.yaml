@@ -86,7 +86,7 @@ jobs:
           echo "<settings>
                   <servers>
                     <server>
-                      <id>my-github-actions</id>
+                      <id>central</id>
                       <username>${{ secrets.JFROG1_USERNAME }}</username>
                       <password>${{ secrets.JFROG1_API_KEY }}</password>
                     </server>
